@@ -17,11 +17,14 @@ window.addEventListener('DOMContentLoaded', () =>{
   const date = document.getElementById('date-1');
   const dayOfWeek = document.getElementById('day-of-week');
   const form = document.getElementById('form-1');
+  const remarks = document.getElementById('remarks');
+  const table = document.getElementById('table-1');
 
   /**
    * @type {IDBDatabase}
    */
   let database = undefined;
+  let updater = undefined;
 
   if (!window.indexedDB) {
     error.innerHTML = '<p>このブラウザは動作に必要な機能をサポートしていません。</p>';
@@ -36,6 +39,9 @@ window.addEventListener('DOMContentLoaded', () =>{
 
   dbReq.onsuccess = (evt) => {
     database = evt.target.result;
+    updater = tableUpdaterFactory(database);
+
+    updater(table);
   }
 
   dbReq.onupgradeneeded = (evt) => {
@@ -83,8 +89,7 @@ window.addEventListener('DOMContentLoaded', () =>{
   }`;
 
   const updateDayOfWeek = () => {
-    const d = new Date(date.value);
-    dayOfWeek.innerText = `(${['', '月','火','水','木','金','土','日'][d.getDay()]})`;
+    dayOfWeek.innerText = `(${getDayOfWeek(date.value)})`;
   };
 
   date.addEventListener('change', updateDayOfWeek);
@@ -97,13 +102,14 @@ window.addEventListener('DOMContentLoaded', () =>{
       date: date.value,
       morning: checkboxes[0].checked,
       evening: checkboxes[1].checked,
-      cold: checkboxes[2].checked,
+      cold: checkboxes.slice(3).some(it => it.checked),
       cough: checkboxes[3].checked,
       runny_nose: checkboxes[4].checked,
       sneeze: checkboxes[5].checked,
       sore_throat: checkboxes[6].checked,
       malaise: checkboxes[7].checked,
-      dyspnea: checkboxes[8].checked
+      dyspnea: checkboxes[8].checked,
+      remarks: remarks.value
     }
 
     const store = database.transaction([OBJ_STORE_NAME], "readwrite").objectStore(OBJ_STORE_NAME);
@@ -112,13 +118,72 @@ window.addEventListener('DOMContentLoaded', () =>{
     req.onsuccess = (ev) => {
       if (typeof ev.target.result === 'undefined') {
         console.log("add new row");
-        store.add(data);
+        store.add(data).onsuccess = () => updater(table);
         return;
       }
-      data.id = ev.target.result;
-      store.put(data);
+      data.id = ev.target.result.id;
+      store.put(data).onsuccess = () => updater(table);
     };
   });
 
   error.remove();
 });
+
+
+function getDayOfWeek(date) {
+  const d = new Date(date);
+  return ['', '月','火','水','木','金','土','日'][d.getDay()]
+}
+
+/**
+ * 
+ * @param {IDBDatabase} database 
+ */
+function tableUpdaterFactory(database) {
+  /**
+   * 
+   * @param {HTMLTableElement} table 
+   */
+  function updateTable(table) {
+    const objectStore = database.transaction([OBJ_STORE_NAME], 'readonly').objectStore(OBJ_STORE_NAME);
+    const request = objectStore.getAll();
+
+    request.onsuccess = (ev) => {
+      /**
+       * @type {Array}
+       */
+      const results = ev.target.result.sort((a,b) => { (new Date(a.date)) - (new Date(b.date)) });
+
+      table.innerHTML = "<tr><th>日付</th><th>曜日</th><th>朝の発熱</th><th>夕方の発熱</th><th>風邪症状</th><th>備考</th></tr>"
+
+      results.forEach(({ date, morning, evening, cold, cough, runny_nose, sneeze, sore_throat, malaise, dyspnea, remarks}) => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `<td>${
+          date
+        }</td><td>${
+          getDayOfWeek(date)
+        }</td><td>${
+          morning ? '発熱あり' : '発熱なし'
+        }</td><td>${
+          evening ? '発熱あり' : '発熱なし'
+        }</td><td>${
+          cold ? [
+            cough ? ['咳'] : [],
+            runny_nose ? ['鼻水'] : [],
+            sneeze ? ['くしゃみ'] : [],
+            sore_throat ? ['咽喉痛'] : [],
+            malaise ? ['倦怠感'] : [],
+            dyspnea ? ['呼吸困難感'] : [],
+          ].flat().join('・') : '風邪症状なし'
+        }</td><td>${
+          remarks || '備考なし'
+        }</td>`;
+
+        table.appendChild(row);
+      });
+    };
+  }
+
+  return updateTable;
+}
