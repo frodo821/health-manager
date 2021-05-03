@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', () =>{
   const form = document.getElementById('form-1');
   const remarks = document.getElementById('remarks');
   const table = document.getElementById('table-1');
+  const printButton = document.getElementById('print')
 
   /**
    * @type {IDBDatabase}
@@ -126,6 +127,16 @@ window.addEventListener('DOMContentLoaded', () =>{
     };
   });
 
+  printButton.addEventListener('click', () => {
+    const objectStore = database.transaction([OBJ_STORE_NAME], 'readonly').objectStore(OBJ_STORE_NAME);
+    objectStore.getAll().onsuccess = (ev) => {
+      const newWin = window.open('', '_blank');
+      const html = generatePrintHtml(ev.target.result);
+      newWin.document.documentElement.innerHTML = html;
+      console.log(html);
+    }
+  })
+
   error.remove();
 });
 
@@ -186,4 +197,50 @@ function tableUpdaterFactory(database) {
   }
 
   return updateTable;
+}
+
+function generatePrintHtml(data) {
+  const results = data.sort((a,b) => (new Date(a.date)) - (new Date(b.date))).slice(0, 14);
+
+  const rows = results.map(({ date, morning, evening, cold, cough, runny_nose, sneeze, sore_throat, malaise, dyspnea, remarks}) => {
+    return `<tr><td>${
+      date
+    }</td><td>${
+      getDayOfWeek(date)
+    }</td><td>${
+      morning ? '発熱あり' : '発熱なし'
+    }</td><td>${
+      evening ? '発熱あり' : '発熱なし'
+    }</td><td>${
+      cold ? [
+        cough ? ['咳'] : [],
+        runny_nose ? ['鼻水'] : [],
+        sneeze ? ['くしゃみ'] : [],
+        sore_throat ? ['咽喉痛'] : [],
+        malaise ? ['倦怠感'] : [],
+        dyspnea ? ['呼吸困難感'] : [],
+      ].flat().join('・') : '風邪症状なし'
+    }</td><td>${
+      remarks || '備考なし'
+    }</td></tr>`;
+  }).join('');
+
+  return `<head>
+  <link rel="stylesheet" href="${location.origin}/print-style.css">
+  <title>健康観察記録表</title>
+</head>
+<body>
+  <header>筑波大学</header>
+  <h1>健康観察記録表</h1>
+  <div id="student-info">
+    <div><label for="student-number">学籍番号</label><input id="student-number" /></div>
+    <div><label for="collage">所属</label><input id="collage" /></div>
+    <div><label for="name">名前</label><input id="name" /></div>
+  </div>
+  <div id="temperature"><label for="temperature-input">平熱</label><input id="temperature-input" />度</div>
+  <table>
+    <tr><th>日付</th><th>曜日</th><th>朝の発熱</th><th>夕方の発熱</th><th>風邪症状</th><th>備考</th></tr>
+    ${rows}
+  </table>
+</body>`
 }

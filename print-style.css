@@ -1,0 +1,101 @@
+body {
+  width: 210mm;
+}
+
+table {
+  border: solid 2px;
+  border-collapse: collapse;
+  text-align: center;
+  width: calc(100% - 2rem);
+  margin: 2rem 1rem;
+}
+
+table th {
+  border: solid 1px;
+  border-bottom: dotted 2px;
+  border-collapse: collapse;
+}
+
+table th:nth-child(1) {
+  width: 30mm;
+}
+
+table th:nth-child(2) {
+  width: 10mm;
+}
+
+table th:nth-child(3) {
+  width: 25mm;
+}
+
+table th:nth-child(4) {
+  width: 25mm;
+}
+
+table th:nth-child(5) {
+  width: 60mm;
+}
+
+table tr {
+  border: solid 1px;
+  border-collapse: collapse;
+}
+
+table td {
+  border: solid 1px;
+  border-collapse: collapse;
+}
+
+header {
+  text-align: end;
+}
+
+h1 {
+  text-align: center;
+}
+
+#student-info {
+  display: flex;
+  gap: 2rem;
+  border: solid 2px;
+  width: calc(100% - 12rem);
+  float: left;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+#student-number {
+  width: 5rem;
+}
+
+#collage {
+  width: 10rem;
+}
+
+#temperature {
+  border: solid 2px;
+  margin-left: 1rem;
+  float: left;
+}
+
+#temperature input {
+  width: 3.5rem;
+}
+
+input {
+  border: none;
+}
+
+@media screen {
+  input {
+    border-bottom: solid 1px #018786;
+    transition: 100ms;
+    outline-offset: 0;
+    text-align: end;
+  }
+
+  input:focus {
+    outline-offset: 2px;
+  }
+}
