@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', () =>{
 
 function getDayOfWeek(date) {
   const d = new Date(date);
-  return ['', '月','火','水','木','金','土','日'][d.getDay()]
+  return ['日', '月','火','水','木','金','土'][d.getDay()]
 }
 
 /**
@@ -152,7 +152,7 @@ function tableUpdaterFactory(database) {
       /**
        * @type {Array}
        */
-      const results = ev.target.result.sort((a,b) => { (new Date(a.date)) - (new Date(b.date)) });
+      const results = ev.target.result.sort((a,b) => (new Date(a.date)) - (new Date(b.date)));
 
       table.innerHTML = "<tr><th>日付</th><th>曜日</th><th>朝の発熱</th><th>夕方の発熱</th><th>風邪症状</th><th>備考</th></tr>"
 
