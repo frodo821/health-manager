@@ -200,7 +200,10 @@ function tableUpdaterFactory(database) {
 }
 
 function generatePrintHtml(data) {
-  const results = data.sort((a,b) => (new Date(a.date)) - (new Date(b.date))).slice(0, 14);
+  /**
+   * @type {Array}
+   */
+  const results = data.sort((a,b) => (new Date(a.date)) - (new Date(b.date))).slice(-14);
 
   const rows = results.map(({ date, morning, evening, cold, cough, runny_nose, sneeze, sore_throat, malaise, dyspnea, remarks}) => {
     return `<tr><td>${
