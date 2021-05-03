@@ -1,0 +1,19 @@
+span.parenthesis {
+  font-size: 1.2rem;
+  margin-left: 0.4rem;
+}
+
+.remarks-container {}
+
+.remarks-container input {
+  border: none;
+  border-bottom: solid 1px;
+  padding: 0.5rem 0;
+  transition: 100ms;
+  outline-offset: 0;
+}
+
+.remarks-container input:focus {
+  outline: solid 3px #018786;
+  outline-offset: 2px;
+}

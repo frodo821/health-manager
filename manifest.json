@@ -1,0 +1,7 @@
+{
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "name": "健康観察記録チェック",
+  "default_locale": "ja",
+  "display": "standalone"
+}

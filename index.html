@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="main.js"></script>
+    <script>mdc.autoInit();</script>
+    <title>健康観察記録</title>
+  </head>
+  <body id="root">
+    <div id="error">
+      <noscript>
+        このブラウザはJavaScriptに対応していないか、JavaScriptの実行が無効になっています。
+        JavaScriptを有効にするか、対応しているブラウザを利用してください。
+      </noscript>
+    </div>
+    <form action="." id="form-1">
+      <div class="mdc-text-field">
+        <input class="mdc-text-field__input" id="date-1" type="date">
+        <div class="mdc-line-ripple"></div>
+      </div>
+      <span id="day-of-week"></span>
+      <div class="mdc-form-field">
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-1">朝: 発熱がある(あった)</label>
+      </div>
+      <div class="mdc-form-field">
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-2" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-2">夕方: 発熱がある(あった)</label>
+      </div>
+      <div class="mdc-form-field">
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-3" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-3">風邪症状あり</label>
+        <span class="parenthesis">(</span>
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-4" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-4">咳</label>
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-5" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-5">鼻水</label>
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-6" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-6">くしゃみ</label>
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-7" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-7">咽頭痛</label>
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-8" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-8">倦怠感</label>
+        <div class="mdc-checkbox">
+          <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-9" />
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+            </svg>
+            <div class="mdc-checkbox__mixedmark"></div>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label for="checkbox-9">呼吸困難感</label>
+        <span class="parenthesis">)</span>
+        <label class="remarks-container">
+          備考
+          <input type="text" id="remarks">
+        </label>
+      </div>
+      <button class="mdc-button mdc-button--raised" type="submit">
+        <span class="mdc-button__ripple"></span>
+        記録する
+      </button>
+    </form>
+    <table id="table-1">
+      <th>
+        <td>日付</td>
+        <td>曜日</td>
+        <td>朝の発熱</td>
+        <td>夕方の発熱</td>
+        <td>風邪症状</td>
+        <td>備考</td>
+      </th>
+    </table>
+  </body>
+</html>
